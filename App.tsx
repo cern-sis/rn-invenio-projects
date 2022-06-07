@@ -18,6 +18,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import Welcome from './components/Welcome';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,13 +29,7 @@ const App = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={{flex: 1}}>
-        <View
-          style={{
-            flex: 1,
-            padding: 25,
-          }}>
-          <Text>My Projects</Text>
-        </View>
+        <Welcome />
       </ScrollView>
     </SafeAreaView>
   );
