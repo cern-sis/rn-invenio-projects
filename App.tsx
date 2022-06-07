@@ -9,7 +9,6 @@
  */
 
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import * as eva from '@eva-design/eva';
@@ -18,6 +17,7 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {default as theme} from './theme/custom-theme.json';
 import Home from './components/Home';
 import Settings from './components/Settings';
+import {NavigationContainer} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 

@@ -8,6 +8,7 @@ import {
   useTheme,
   ThemeType,
 } from '@ui-kitten/components';
+import {useStore} from '../../state';
 
 import {Props, ProjectProps} from '../../types';
 
@@ -34,12 +35,17 @@ export default function Welcome({navigation}: Props) {
       methods: ['literature', 'authors'],
     },
   ];
+  const changeTitle = useStore(state => state.changeTitle);
+
   return (
     <Layout style={styles(theme).flex}>
       {projects.map(project => (
         <TouchableWithoutFeedback
           key={project.name}
-          onPress={() => navigation.navigate('Search', {params: project})}>
+          onPress={() => {
+            navigation.navigate('Search', {params: project});
+            changeTitle(project.title);
+          }}>
           <View>
             <View style={styles(theme).wrapper}>
               <View style={styles(theme).flex10}>
