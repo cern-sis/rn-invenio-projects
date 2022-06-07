@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
+import {Button, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
 
 import {Props, ProjectProps} from '../../types';
 
 export default function Welcome({navigation}: Props) {
+  const theme = useTheme();
   const projects: ProjectProps[] = [
     {
       name: 'cap',
@@ -22,15 +24,31 @@ export default function Welcome({navigation}: Props) {
     },
   ];
   return (
-    <View>
-      <Text>Welcome</Text>
+    <Layout>
       {projects.map(project => (
-        <Button
+        <TouchableWithoutFeedback
           key={project.name}
-          title={project.title}
-          onPress={() => navigation.navigate('Search', {params: project})}
-        />
+          onPress={() => navigation.navigate('Search', {params: project})}>
+          <View
+            style={{
+              backgroundColor: theme['color-primary-100'],
+              marginTop: 20,
+              padding: 20,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{color: theme['color-primary-600']}}>
+              {project.title}
+            </Text>
+            <Icon
+              name="chevron-right-outline"
+              fill={theme['color-primary-600']}
+              style={{width: 32, height: 32}}
+            />
+          </View>
+        </TouchableWithoutFeedback>
       ))}
-    </View>
+    </Layout>
   );
 }
