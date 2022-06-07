@@ -1,28 +1,36 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import {View, Text, Button} from 'react-native';
 
-// Start by adding three boxes
-// We should have information about the projects (name, descriprion, later icon)
-// create this boxes to be links for another screen
-// The next screen should be the search screen
-// lets pass the name as parameter to the next screen so we know exactlty which will be the api url
+import {Props, ProjectProps} from '../../types';
 
-/*
-  projects = [
+export default function Welcome({navigation}: Props) {
+  const projects: ProjectProps[] = [
     {
-      name: "cap",
-      title:"CERN Analysis Preservation",
-      api:"........"
+      name: 'cap',
+      title: 'CERN Analysis Preservation',
+      api: '........',
     },
     {
-
-    }
-  ]
-*/
-export default function Welcome() {
+      name: 'scoap3',
+      title: 'SCOAP3',
+      api: '........',
+    },
+    {
+      name: 'inspire',
+      title: 'Inspire',
+      api: '........',
+    },
+  ];
   return (
     <View>
       <Text>Welcome</Text>
+      {projects.map(project => (
+        <Button
+          key={project.name}
+          title={project.title}
+          onPress={() => navigation.navigate('Search', {params: project})}
+        />
+      ))}
     </View>
   );
 }
