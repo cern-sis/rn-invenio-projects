@@ -16,16 +16,26 @@ import Welcome from './components/Welcome';
 import Search from './components/Search';
 import {RootStackParamList} from './types';
 
+import * as eva from '@eva-design/eva';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import {default as theme} from './theme/custom-theme.json';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Search" component={Search} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Welcome" component={Welcome} />
+            <Stack.Screen name="Search" component={Search} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ApplicationProvider>
+    </>
   );
 };
 
