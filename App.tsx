@@ -9,20 +9,16 @@
  */
 
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-
-import Welcome from './components/Welcome';
-import Search from './components/Search';
-import Item from './components/Items';
-import {RootStackParamList} from './types';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {ApplicationProvider, IconRegistry, Icon} from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {default as theme} from './theme/custom-theme.json';
+import Home from './components/Home';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
@@ -30,11 +26,36 @@ const App = () => {
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Welcome" component={Welcome} />
-            <Stack.Screen name="Search" component={Search} />
-            <Stack.Screen name="Item" component={Item} />
-          </Stack.Navigator>
+          <Tab.Navigator>
+            <Tab.Screen
+              name="Home"
+              component={Home}
+              options={{
+                headerShown: false,
+                tabBarIcon: ({color}) => (
+                  <Icon
+                    name="home-outline"
+                    style={{width: 25, height: 25}}
+                    fill={color}
+                  />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Settings"
+              component={Home}
+              options={{
+                headerShown: false,
+                tabBarIcon: ({color}) => (
+                  <Icon
+                    name="settings-outline"
+                    style={{width: 25, height: 25}}
+                    fill={color}
+                  />
+                ),
+              }}
+            />
+          </Tab.Navigator>
         </NavigationContainer>
       </ApplicationProvider>
     </>
