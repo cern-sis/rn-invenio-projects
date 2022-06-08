@@ -4,6 +4,7 @@ export interface ProjectProps {
   name: string;
   title: string;
   api: string;
+  methods: string[];
 }
 
 interface ScreenProps {

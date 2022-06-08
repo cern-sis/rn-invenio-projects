@@ -10,17 +10,14 @@ export default function Welcome({navigation}: Props) {
     {
       name: 'cap',
       title: 'CERN Analysis Preservation',
-      api: '........',
-    },
-    {
-      name: 'scoap3',
-      title: 'SCOAP3',
-      api: '........',
+      api: 'cap-test.cern.ch/api/deposits?access_token=IyfcCNQJfy6ho6SSPkf0gfleVSVdk5XpHDOz0hLJEgaqc6DUvVlz05vPIvgY',
+      methods: [],
     },
     {
       name: 'inspire',
       title: 'Inspire',
-      api: '........',
+      api: 'https://inspirehep.net/api/literature?sort=mostrecent&size=25&page=1',
+      methods: ['literature', 'authors'],
     },
   ];
   return (
