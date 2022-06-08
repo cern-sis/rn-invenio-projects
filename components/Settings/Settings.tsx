@@ -1,12 +1,24 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
-import {Layout} from '@ui-kitten/components';
+import {Layout, Text, Toggle} from '@ui-kitten/components';
 
 const Settings = () => {
   return (
-    <Layout>
+    <Layout style={{flex: 1, padding: 20}}>
       <View>
-        <Text>Settings</Text>
+        <Text category="label">theme</Text>
+        <View
+          style={{
+            backgroundColor: 'lightgrey',
+            padding: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderRadius: 3,
+          }}>
+          <Text>Light Theme</Text>
+          <Toggle checked />
+        </View>
       </View>
     </Layout>
   );
