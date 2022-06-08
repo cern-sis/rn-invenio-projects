@@ -10,6 +10,7 @@ import {
   Text,
   Spinner,
   useTheme,
+  ThemeType,
 } from '@ui-kitten/components';
 
 import Header from './Header';
@@ -152,7 +153,7 @@ export default function Search({route, navigation}: Props) {
   );
 }
 
-const styles = theme =>
+const styles = (theme: ThemeType) =>
   StyleSheet.create({
     mb20: {
       marginBottom: 20,

@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import {Text, useTheme} from '@ui-kitten/components';
+import {Text, useTheme, ThemeType} from '@ui-kitten/components';
 import React from 'react';
 
 interface DataProps {
@@ -23,7 +23,7 @@ const Header: React.FC<StateProps> = ({data}) => {
   );
 };
 
-const styles = theme =>
+const styles = (theme: ThemeType) =>
   StyleSheet.create({
     wrapper: {
       padding: 10,

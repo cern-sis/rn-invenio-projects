@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Card, Layout, Text, useTheme} from '@ui-kitten/components';
+import {Card, Layout, Text, ThemeType, useTheme} from '@ui-kitten/components';
 import JSONTree from 'react-native-json-tree';
 
 import React from 'react';
@@ -62,7 +62,7 @@ const Item = ({route}) => {
   );
 };
 
-const styles = theme =>
+const styles = (theme: ThemeType) =>
   StyleSheet.create({
     flex: {flex: 1},
     p20: {padding: 20},

@@ -1,6 +1,13 @@
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
-import {Divider, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
+import {
+  Divider,
+  Icon,
+  Layout,
+  Text,
+  useTheme,
+  ThemeType,
+} from '@ui-kitten/components';
 
 import {Props, ProjectProps} from '../../types';
 
@@ -57,7 +64,7 @@ export default function Welcome({navigation}: Props) {
   );
 }
 
-const styles = theme =>
+const styles = (theme: ThemeType) =>
   StyleSheet.create({
     flex: {
       flex: 1,
