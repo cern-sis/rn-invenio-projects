@@ -17,6 +17,7 @@ import {ApplicationProvider, IconRegistry, Icon} from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {default as theme} from './theme/custom-theme.json';
 import Home from './components/Home';
+import Settings from './components/Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ const App = () => {
             />
             <Tab.Screen
               name="Settings"
-              component={Home}
+              component={Settings}
               options={{
                 headerShown: false,
                 tabBarIcon: ({color}) => (
