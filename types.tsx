@@ -6,13 +6,14 @@ export interface ProjectProps {
   api: string;
 }
 
-interface SearchProps {
+interface ScreenProps {
   params: ProjectProps;
 }
 
 export type RootStackParamList = {
   Welcome: undefined;
-  Search: SearchProps;
+  Search: ScreenProps;
+  Item: ScreenProps;
 };
 
 export type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;

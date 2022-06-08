@@ -14,6 +14,7 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import Welcome from './components/Welcome';
 import Search from './components/Search';
+import Item from './components/Items';
 import {RootStackParamList} from './types';
 
 import * as eva from '@eva-design/eva';
@@ -32,6 +33,7 @@ const App = () => {
           <Stack.Navigator>
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Search" component={Search} />
+            <Stack.Screen name="Item" component={Item} />
           </Stack.Navigator>
         </NavigationContainer>
       </ApplicationProvider>
