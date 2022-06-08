@@ -14,7 +14,11 @@ import {
 
 import Header from './Header';
 import Footer from './Footer';
-
+const options = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
 export default function Search({route, navigation}: Props) {
   const {params} = route.params;
   const [items, setItems] = useState([]);
@@ -41,7 +45,62 @@ export default function Search({route, navigation}: Props) {
   // update data when user searches for a term
   useEffect(() => {
     getInitialData(searchValue);
-  }, [searchValue]);
+  }, [searchValue, selectedMethod]);
+
+  const getHeaderText = item => {
+    const type = params.name;
+    const headerChoices = {
+      cap: item.metadata.general_title || 'Untitled',
+      inspire: item.metadata?.authors && item.metadata?.authors[0].full_name,
+    };
+
+    return {
+      title: headerChoices[type],
+      tag: new Date(item.created).toLocaleString('en-GB', options),
+    };
+  };
+
+  const getCardContent = item => {
+    const type = params.name;
+
+    const choices = {
+      cap: (
+        <View>
+          <View>
+            <Text>Fullname</Text>
+            <Text appearance="hint">{item.schema?.fullname}</Text>
+          </View>
+          <View style={{marginTop: 20}}>
+            <Text>Status</Text>
+            <Text appearance="hint">{item.status}</Text>
+          </View>
+        </View>
+      ),
+      inspire: (
+        <View>
+          {selectedMethod == 'literature' ? (
+            <View>
+              <Text>Title</Text>
+              <Text appearance="hint">
+                {item.metadata.titles && item.metadata.titles[0].title}
+              </Text>
+            </View>
+          ) : (
+            <View>
+              <Text>Name</Text>
+              <Text appearance="hint">{item.metadata?.name?.value}</Text>
+            </View>
+          )}
+          <View style={{marginTop: 20}}>
+            <Text>ID</Text>
+            <Text appearance="hint">{item.id}</Text>
+          </View>
+        </View>
+      ),
+    };
+
+    return choices[type];
+  };
 
   return (
     <ScrollView>
@@ -63,7 +122,9 @@ export default function Search({route, navigation}: Props) {
             <View style={{marginRight: 10}} key={method}>
               <Text
                 appearance="alternative"
-                onPress={() => setSelectedMethod(method)}
+                onPress={() =>
+                  params.methods.length > 1 && setSelectedMethod(method)
+                }
                 style={{
                   padding: 5,
                   backgroundColor:
@@ -80,16 +141,9 @@ export default function Search({route, navigation}: Props) {
           <Card
             style={{marginBottom: 20}}
             key={index}
-            header={<Header item={item} />}
+            header={<Header data={getHeaderText(item)} />}
             footer={<Footer onClick={() => navigation.navigate('Item')} />}>
-            <View>
-              <Text>Fullname</Text>
-              <Text appearance="hint">{item.schema.fullname}</Text>
-            </View>
-            <View style={{marginTop: 20}}>
-              <Text>Status</Text>
-              <Text appearance="hint">{item.status}</Text>
-            </View>
+            {getCardContent(item)}
           </Card>
         ))}
       </Layout>

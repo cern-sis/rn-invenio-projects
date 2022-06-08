@@ -2,7 +2,7 @@ import {View} from 'react-native';
 import {Text, useTheme} from '@ui-kitten/components';
 import React from 'react';
 
-const Header = ({item}) => {
+const Header = ({data}) => {
   const theme = useTheme();
 
   return (
@@ -12,7 +12,7 @@ const Header = ({item}) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      <Text>{item.metadata.general_title || 'Untitled'}</Text>
+      <Text>{data.title}</Text>
       <Text
         appearance="alternative"
         style={{
@@ -21,7 +21,7 @@ const Header = ({item}) => {
           backgroundColor: theme['color-primary-100'],
           padding: 3,
         }}>
-        {item.experiment}
+        {data.tag}
       </Text>
     </View>
   );
