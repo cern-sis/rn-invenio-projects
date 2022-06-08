@@ -9,7 +9,6 @@ const Settings = () => {
         <Text category="label">theme</Text>
         <View
           style={{
-            backgroundColor: 'lightgrey',
             padding: 10,
             flexDirection: 'row',
             alignItems: 'center',

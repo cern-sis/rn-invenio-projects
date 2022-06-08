@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import axios from 'axios';
 import {Props} from '../../types';
-
+import {debounce} from 'lodash';
 import {
   Input,
   Layout,
@@ -26,7 +26,7 @@ export default function Search({route, navigation}: Props) {
   const theme = useTheme();
   const [selectedMethod, setSelectedMethod] = useState(params.methods[0]);
 
-  const getInitialData = async (value = '') => {
+  const getInitialData = debounce(async (value = '') => {
     const url = params.api + selectedMethod + params.additional + '&q=' + value;
     try {
       const data = await axios({
@@ -35,7 +35,7 @@ export default function Search({route, navigation}: Props) {
       });
       setItems(data.data.hits.hits);
     } catch (e) {}
-  };
+  }, 500);
 
   // update data when user comes to the screen
   useEffect(() => {
