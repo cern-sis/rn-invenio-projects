@@ -10,13 +10,16 @@ export default function Welcome({navigation}: Props) {
     {
       name: 'cap',
       title: 'CERN Analysis Preservation',
-      api: 'cap-test.cern.ch/api/deposits?access_token=IyfcCNQJfy6ho6SSPkf0gfleVSVdk5XpHDOz0hLJEgaqc6DUvVlz05vPIvgY',
-      methods: [],
+      api: 'https://cap-test.cern.ch/api/',
+      additional:
+        '?access_token=IyfcCNQJfy6ho6SSPkf0gfleVSVdk5XpHDOz0hLJEgaqc6DUvVlz05vPIvgY',
+      methods: ['deposits'],
     },
     {
       name: 'inspire',
       title: 'Inspire',
-      api: 'https://inspirehep.net/api/literature?sort=mostrecent&size=25&page=1',
+      api: 'https://inspirehep.net/api/',
+      additional: '?sort=mostrecent&size=25&page=1',
       methods: ['literature', 'authors'],
     },
   ];

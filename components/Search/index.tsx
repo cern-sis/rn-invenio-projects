@@ -20,34 +20,29 @@ export default function Search({route, navigation}: Props) {
   const [items, setItems] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const theme = useTheme();
-  const [selectedMethod, setSelectedMethod] = useState(
-    params.methods.length > 0 ? params.methods[0] : '',
-  );
+  const [selectedMethod, setSelectedMethod] = useState(params.methods[0]);
 
   const getInitialData = async (value = '') => {
+    const url = params.api + selectedMethod + params.additional + '&q=' + value;
     try {
       const data = await axios({
         method: 'GET',
-        url: `https://cap-test.cern.ch/api/deposits?access_token=IyfcCNQJfy6ho6SSPkf0gfleVSVdk5XpHDOz0hLJEgaqc6DUvVlz05vPIvgY&q=${value}`,
+        url,
       });
       setItems(data.data.hits.hits);
     } catch (e) {}
   };
-  const getInspireData = async () => {
-    try {
-      const response = await axios({
-        method: 'GET',
-        url: `https://inspirehep.net/api/${selectedMethod}?sort=mostrecent&size=25&page=1`,
-      });
-    } catch (e) {}
-  };
+
+  // update data when user comes to the screen
   useEffect(() => {
     getInitialData();
-    getInspireData();
   }, []);
+
+  // update data when user searches for a term
   useEffect(() => {
     getInitialData(searchValue);
   }, [searchValue]);
+
   return (
     <ScrollView>
       <Layout style={{padding: 20}}>
