@@ -14,6 +14,7 @@ const Header = ({data}) => {
       }}>
       <Text>{data.title}</Text>
       <Text
+        category="c1"
         appearance="alternative"
         style={{
           borderRadius: 4,

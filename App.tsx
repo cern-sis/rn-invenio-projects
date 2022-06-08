@@ -25,7 +25,7 @@ const App = () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+      <ApplicationProvider {...eva} theme={{...eva.dark, ...theme}}>
         <NavigationContainer>
           <Tab.Navigator>
             <Tab.Screen

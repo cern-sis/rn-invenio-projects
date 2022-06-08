@@ -1,6 +1,13 @@
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
-import {Button, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
+import {
+  Button,
+  Divider,
+  Icon,
+  Layout,
+  Text,
+  useTheme,
+} from '@ui-kitten/components';
 
 import {Props, ProjectProps} from '../../types';
 
@@ -28,35 +35,37 @@ export default function Welcome({navigation}: Props) {
     },
   ];
   return (
-    <Layout>
+    <Layout style={{flex: 1}}>
       {projects.map(project => (
         <TouchableWithoutFeedback
           key={project.name}
           onPress={() => navigation.navigate('Search', {params: project})}>
-          <View
-            style={{
-              backgroundColor: theme['color-primary-100'],
-              marginTop: 20,
-              padding: 20,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flex: 10}}>
-              <Text
-                category="label"
-                style={{color: theme['color-primary-600'], marginBottom: 5}}>
-                {project.title}
-              </Text>
-              <Text category="p2">{project.description}</Text>
+          <View>
+            <View
+              style={{
+                marginVertical: 20,
+                padding: 20,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <View style={{flex: 10}}>
+                <Text
+                  category="label"
+                  style={{color: theme['color-primary-600'], marginBottom: 5}}>
+                  {project.title}
+                </Text>
+                <Text category="p2">{project.description}</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Icon
+                  name="chevron-right-outline"
+                  fill={theme['color-primary-600']}
+                  style={{width: 32, height: 32}}
+                />
+              </View>
             </View>
-            <View style={{flex: 1}}>
-              <Icon
-                name="chevron-right-outline"
-                fill={theme['color-primary-600']}
-                style={{width: 32, height: 32}}
-              />
-            </View>
+            <Divider />
           </View>
         </TouchableWithoutFeedback>
       ))}
