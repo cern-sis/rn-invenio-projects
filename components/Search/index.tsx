@@ -142,7 +142,9 @@ export default function Search({route, navigation}: Props) {
             style={{marginBottom: 20}}
             key={index}
             header={<Header data={getHeaderText(item)} />}
-            footer={<Footer onClick={() => navigation.navigate('Item')} />}>
+            footer={
+              <Footer onClick={() => navigation.navigate('Item', {item})} />
+            }>
             {getCardContent(item)}
           </Card>
         ))}
