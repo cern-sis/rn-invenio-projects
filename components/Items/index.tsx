@@ -1,4 +1,4 @@
-import {ScrollView, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Card, Layout, Text, useTheme} from '@ui-kitten/components';
 import JSONTree from 'react-native-json-tree';
 
@@ -13,58 +13,33 @@ const Item = ({route}) => {
   const theme = useTheme();
 
   return (
-    <Layout style={{flex: 1}}>
-      <ScrollView style={{padding: 20}}>
-        <Text category="h6" style={{textAlign: 'center'}}>
+    <Layout style={styles(theme).flex}>
+      <ScrollView style={styles(theme).p20}>
+        <Text category="h6" style={styles(theme).textCenter}>
           {item.metadata?.general_title}
         </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginVertical: 20,
-          }}>
+        <View style={styles(theme).row}>
           <Text
             category="c1"
             appearance="alternative"
-            style={{
-              color: theme['color-primary-900'],
-              backgroundColor: theme['color-primary-100'],
-              borderRadius: 4,
-              padding: 5,
-            }}>
+            style={styles(theme).tag1}>
             {item.experiment}
           </Text>
           <Text
             appearance="alternative"
             category="c1"
-            style={{
-              color: theme['color-info-900'],
-              backgroundColor: theme['color-info-100'],
-              borderRadius: 4,
-              padding: 5,
-            }}>
+            style={styles(theme).tag2}>
             {item.id}
           </Text>
           <Text
             category="c1"
             appearance="alternative"
-            style={{
-              color: theme['color-success-900'],
-              backgroundColor: theme['color-success-100'],
-              borderRadius: 4,
-              padding: 5,
-            }}>
+            style={styles(theme).tag3}>
             {item.status}
           </Text>
         </View>
         <Card>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+          <View style={styles(theme).rowCenter}>
             <View>
               <Text category="label">Created</Text>
               <Text>
@@ -86,5 +61,40 @@ const Item = ({route}) => {
     </Layout>
   );
 };
+
+const styles = theme =>
+  StyleSheet.create({
+    flex: {flex: 1},
+    p20: {padding: 20},
+    textCenter: {textAlign: 'center'},
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: 20,
+    },
+    rowCenter: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    tag1: {
+      color: theme['color-primary-900'],
+      backgroundColor: theme['color-primary-100'],
+      borderRadius: 4,
+      padding: 5,
+    },
+    tag2: {
+      color: theme['color-info-900'],
+      backgroundColor: theme['color-info-100'],
+      borderRadius: 4,
+      padding: 5,
+    },
+    tag3: {
+      color: theme['color-success-900'],
+      backgroundColor: theme['color-success-100'],
+      borderRadius: 4,
+      padding: 5,
+    },
+  });
 
 export default Item;

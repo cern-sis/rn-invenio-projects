@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import axios from 'axios';
 import {Props} from '../../types';
 import {debounce} from 'lodash';
@@ -70,7 +70,7 @@ export default function Search({route, navigation}: Props) {
             <Text>Fullname</Text>
             <Text appearance="hint">{item.schema?.fullname}</Text>
           </View>
-          <View style={{marginTop: 20}}>
+          <View style={styles(theme).mt20}>
             <Text>Status</Text>
             <Text appearance="hint">{item.status}</Text>
           </View>
@@ -78,7 +78,7 @@ export default function Search({route, navigation}: Props) {
       ),
       inspire: (
         <View>
-          {selectedMethod == 'literature' ? (
+          {selectedMethod === 'literature' ? (
             <View>
               <Text>Title</Text>
               <Text appearance="hint">
@@ -91,7 +91,7 @@ export default function Search({route, navigation}: Props) {
               <Text appearance="hint">{item.metadata?.name?.value}</Text>
             </View>
           )}
-          <View style={{marginTop: 20}}>
+          <View style={styles(theme).mt20}>
             <Text>ID</Text>
             <Text appearance="hint">{item.id}</Text>
           </View>
@@ -104,34 +104,33 @@ export default function Search({route, navigation}: Props) {
 
   return (
     <ScrollView>
-      <Layout style={{padding: 20}}>
+      <Layout style={styles(theme).p20}>
         <Input
           placeholder="Search..."
           status="primary"
           value={searchValue}
           onChangeText={setSearchValue}
-          style={{marginBottom: 20}}
+          style={styles(theme).mb20}
         />
-        {items.length == 0 && (
-          <View style={{alignItems: 'center'}}>
+        {items.length === 0 && (
+          <View style={styles(theme).center}>
             <Spinner size="large" />
           </View>
         )}
-        <View style={{marginBottom: 50, flexDirection: 'row'}}>
+        <View style={styles(theme).methods}>
           {params.methods.map(method => (
-            <View style={{marginRight: 10}} key={method}>
+            <View style={styles(theme).mr10} key={method}>
               <Text
                 appearance="alternative"
                 onPress={() =>
                   params.methods.length > 1 && setSelectedMethod(method)
                 }
-                style={{
-                  padding: 5,
-                  backgroundColor:
-                    selectedMethod == method
-                      ? theme['color-primary-400']
-                      : theme['color-info-200'],
-                }}>
+                style={[
+                  styles(theme).p5,
+                  selectedMethod === method
+                    ? styles(theme).activeLabel
+                    : styles(theme).inactiveLabel,
+                ]}>
                 {method}
               </Text>
             </View>
@@ -139,7 +138,7 @@ export default function Search({route, navigation}: Props) {
         </View>
         {items.map((item, index) => (
           <Card
-            style={{marginBottom: 20}}
+            style={styles(theme).mb20}
             key={index}
             header={<Header data={getHeaderText(item)} />}
             footer={
@@ -152,3 +151,20 @@ export default function Search({route, navigation}: Props) {
     </ScrollView>
   );
 }
+
+const styles = theme =>
+  StyleSheet.create({
+    mb20: {
+      marginBottom: 20,
+    },
+    mr10: {
+      marginRight: 10,
+    },
+    methods: {marginBottom: 50, flexDirection: 'row'},
+    center: {alignItems: 'center'},
+    p20: {padding: 20},
+    p5: {padding: 5},
+    activeLabel: {backgroundColor: theme['color-primary-400']},
+    inactiveLabel: {backgroundColor: theme['color-info-200']},
+    mt20: {marginTop: 20},
+  });

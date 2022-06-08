@@ -1,15 +1,25 @@
-import {View, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import {Button} from '@ui-kitten/components';
 
-const Footer = ({onClick}) => {
+interface StateProps {
+  onClick: () => void;
+}
+
+const Footer: React.FC<StateProps> = ({onClick}) => {
   return (
-    <View style={{alignItems: 'flex-end'}}>
+    <View style={styles.align}>
       <Button appearance="ghost" status="info" onPress={onClick}>
         see more
       </Button>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  align: {
+    alignItems: 'flex-end',
+  },
+});
 
 export default Footer;

@@ -1,13 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
-import {
-  Button,
-  Divider,
-  Icon,
-  Layout,
-  Text,
-  useTheme,
-} from '@ui-kitten/components';
+import {Divider, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
 
 import {Props, ProjectProps} from '../../types';
 
@@ -35,33 +28,24 @@ export default function Welcome({navigation}: Props) {
     },
   ];
   return (
-    <Layout style={{flex: 1}}>
+    <Layout style={styles(theme).flex}>
       {projects.map(project => (
         <TouchableWithoutFeedback
           key={project.name}
           onPress={() => navigation.navigate('Search', {params: project})}>
           <View>
-            <View
-              style={{
-                marginVertical: 20,
-                padding: 20,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <View style={{flex: 10}}>
-                <Text
-                  category="label"
-                  style={{color: theme['color-primary-600'], marginBottom: 5}}>
+            <View style={styles(theme).wrapper}>
+              <View style={styles(theme).flex10}>
+                <Text category="label" style={styles(theme).label}>
                   {project.title}
                 </Text>
                 <Text category="p2">{project.description}</Text>
               </View>
-              <View style={{flex: 1}}>
+              <View style={styles(theme).flex}>
                 <Icon
                   name="chevron-right-outline"
                   fill={theme['color-primary-600']}
-                  style={{width: 32, height: 32}}
+                  style={styles(theme).icon}
                 />
               </View>
             </View>
@@ -72,3 +56,25 @@ export default function Welcome({navigation}: Props) {
     </Layout>
   );
 }
+
+const styles = theme =>
+  StyleSheet.create({
+    flex: {
+      flex: 1,
+    },
+    flex10: {
+      flex: 10,
+    },
+    wrapper: {
+      marginVertical: 20,
+      padding: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    icon: {
+      width: 32,
+      height: 32,
+    },
+    label: {color: theme['color-primary-600'], marginBottom: 5},
+  });
