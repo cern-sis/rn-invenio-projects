@@ -3,7 +3,7 @@ import {ScrollView, View} from 'react-native';
 import axios from 'axios';
 import {Props} from '../../types';
 
-import {Input, Layout, Card, Text} from '@ui-kitten/components';
+import {Input, Layout, Card, Text, Spinner} from '@ui-kitten/components';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -38,6 +38,11 @@ export default function Search({route, navigation}: Props) {
           onChangeText={setSearchValue}
           style={{marginBottom: 50}}
         />
+        {items.length == 0 && (
+          <View style={{alignItems: 'center'}}>
+            <Spinner size="large" />
+          </View>
+        )}
         {items.map((item, index) => (
           <Card
             style={{marginBottom: 20}}
