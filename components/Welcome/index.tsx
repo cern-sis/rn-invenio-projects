@@ -10,6 +10,8 @@ export default function Welcome({navigation}: Props) {
     {
       name: 'cap',
       title: 'CERN Analysis Preservation',
+      description:
+        'An open source preservation service for physicists to preserve and document the various materials produced in the analysis process',
       api: 'https://cap-test.cern.ch/api/',
       additional:
         '?access_token=IyfcCNQJfy6ho6SSPkf0gfleVSVdk5XpHDOz0hLJEgaqc6DUvVlz05vPIvgY',
@@ -18,6 +20,8 @@ export default function Welcome({navigation}: Props) {
     {
       name: 'inspire',
       title: 'Inspire',
+      description:
+        'INSPIRE is a trusted community hub that helps researchers to share and find accurate scholarly information in high energy physics.',
       api: 'https://inspirehep.net/api/',
       additional: '?sort=mostrecent&size=25&page=1',
       methods: ['literature', 'authors'],
@@ -38,14 +42,21 @@ export default function Welcome({navigation}: Props) {
               alignItems: 'center',
               justifyContent: 'space-between',
             }}>
-            <Text style={{color: theme['color-primary-600']}}>
-              {project.title}
-            </Text>
-            <Icon
-              name="chevron-right-outline"
-              fill={theme['color-primary-600']}
-              style={{width: 32, height: 32}}
-            />
+            <View style={{flex: 10}}>
+              <Text
+                category="label"
+                style={{color: theme['color-primary-600'], marginBottom: 5}}>
+                {project.title}
+              </Text>
+              <Text category="p2">{project.description}</Text>
+            </View>
+            <View style={{flex: 1}}>
+              <Icon
+                name="chevron-right-outline"
+                fill={theme['color-primary-600']}
+                style={{width: 32, height: 32}}
+              />
+            </View>
           </View>
         </TouchableWithoutFeedback>
       ))}
