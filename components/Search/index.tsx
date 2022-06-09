@@ -72,8 +72,8 @@ export default function Search({route, navigation}: Props) {
             <Text appearance="hint">{item.schema?.fullname}</Text>
           </View>
           <View style={styles(theme).mt20}>
-            <Text>Status</Text>
-            <Text appearance="hint">{item.status}</Text>
+            <Text>Experiment</Text>
+            <Text appearance="hint">{item.experiment}</Text>
           </View>
         </View>
       ),
