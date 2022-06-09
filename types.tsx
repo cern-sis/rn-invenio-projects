@@ -29,3 +29,13 @@ export interface ChangeTitleHookProps {
   darkTheme: boolean;
   setDarkTheme(theme: boolean): void;
 }
+
+export interface SearchHookProps {
+  data: string[];
+  fetch(url: string): void;
+  errorMessage: string;
+  loader: boolean;
+  setLoader(value: boolean): void;
+  setErrorMessage(message: string): void;
+  clean(): void;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {
   Divider,
@@ -33,6 +33,15 @@ export default function Welcome({navigation}: Props) {
       api: 'https://inspirehep.net/api/',
       additional: '?sort=mostrecent&size=25&page=1',
       methods: ['literature', 'authors'],
+    },
+    {
+      name: 'scoap3',
+      title: 'SCOAP3',
+      description:
+        'SCOAP3 is a one-of-its-kind partnership of over three thousand libraries, key funding agencies and research centers in 44 countries, regions or territories and three intergovernmental organisations.',
+      api: 'https://repo.scoap3.org/api/',
+      additional: '?sort=mostrecent&size=25&page=1',
+      methods: ['records'],
     },
   ];
   const changeTitle = useStore(state => state.changeTitle);
