@@ -52,7 +52,10 @@ export default function Search({route, navigation}: Props) {
     const type = params.name;
     const headerChoices = {
       cap: item.metadata.general_title || 'Untitled',
-      inspire: item.metadata?.authors && item.metadata?.authors[0].full_name,
+      inspire:
+        selectedMethod === 'literature'
+          ? item.metadata?.authors && item.metadata?.authors[0].full_name
+          : item.metadata?.name?.value,
     };
 
     return {
@@ -68,11 +71,11 @@ export default function Search({route, navigation}: Props) {
       cap: (
         <View>
           <View>
-            <Text>Fullname</Text>
+            <Text category="label">Fullname</Text>
             <Text appearance="hint">{item.schema?.fullname}</Text>
           </View>
           <View style={styles(theme).mt20}>
-            <Text>Experiment</Text>
+            <Text category="label"> Experiment</Text>
             <Text appearance="hint">{item.experiment}</Text>
           </View>
         </View>
@@ -81,19 +84,22 @@ export default function Search({route, navigation}: Props) {
         <View>
           {selectedMethod === 'literature' ? (
             <View>
-              <Text>Title</Text>
+              <Text category="label">Title</Text>
               <Text appearance="hint">
                 {item.metadata.titles && item.metadata.titles[0].title}
               </Text>
             </View>
           ) : (
             <View>
-              <Text>Name</Text>
-              <Text appearance="hint">{item.metadata?.name?.value}</Text>
+              <Text category="label">Institute</Text>
+              <Text appearance="hint">
+                {item.metadata.positions &&
+                  item.metadata.positions[0].institution}
+              </Text>
             </View>
           )}
           <View style={styles(theme).mt20}>
-            <Text>ID</Text>
+            <Text category="label">ID</Text>
             <Text appearance="hint">{item.id}</Text>
           </View>
         </View>
