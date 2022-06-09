@@ -15,7 +15,9 @@ const Header: React.FC<StateProps> = ({data}) => {
 
   return (
     <View style={styles(theme).wrapper}>
-      <Text>{data.title}</Text>
+      <Text style={styles(theme).title} category="c1">
+        {data.title}
+      </Text>
       <Text category="c1" appearance="alternative" style={styles(theme).tag}>
         {data.tag}
       </Text>
@@ -29,6 +31,10 @@ const styles = (theme: ThemeType) =>
       padding: 10,
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    title: {
+      flex: 4,
     },
     tag: {
       borderRadius: 4,

@@ -23,19 +23,15 @@ const Item = ({route}) => {
             category="c1"
             appearance="alternative"
             style={styles(theme).tag1}>
-            {item.experiment}
+            {item.experiment ||
+              item.metadata?.first_author?.full_name ||
+              item.metadata?.name?.value}
           </Text>
           <Text
             appearance="alternative"
             category="c1"
             style={styles(theme).tag2}>
             {item.id}
-          </Text>
-          <Text
-            category="c1"
-            appearance="alternative"
-            style={styles(theme).tag3}>
-            {item.status}
           </Text>
         </View>
         <Card>
