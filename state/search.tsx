@@ -5,17 +5,9 @@ import {pathOr} from 'ramda';
 import {SearchHookProps} from '../types';
 
 export const useStore = create<SearchHookProps>(set => ({
-  serchParam: '',
-  setSearchParam: (newSerchParam: string) =>
-    set(() => ({serchParam: newSerchParam})),
-
-  selectedMethod: '',
-  setSelectedMethod: (newMethod: string) =>
-    set(() => ({selectedMethod: newMethod})),
-
   errorMessage: '',
-  setErrorMessage: (errorMessage: string) =>
-    set(() => ({errorMessage: errorMessage})),
+  setErrorMessage: (newErrorMessage: string) =>
+    set(() => ({errorMessage: newErrorMessage})),
 
   loader: true,
   setLoader: (loader: boolean) => set(() => ({loader: loader})),
@@ -27,14 +19,13 @@ export const useStore = create<SearchHookProps>(set => ({
     axios
       .get(url)
       .then(response => {
-        set({data: pathOr([], ['data', 'hits', 'hits'], response)});
-        set(() => ({loader: false}));
+        set({
+          data: pathOr([], ['data', 'hits', 'hits'], response),
+          loader: false,
+        });
       })
       .catch(error => {
-        set(() => ({errorMessage: error}));
-        set(() => ({loader: false}));
+        set(() => ({errorMessage: error, loader: false}));
       });
   },
-  clean: () =>
-    set(() => ({selectedMethod: '', serchParam: '', errorMessage: ''})),
 }));

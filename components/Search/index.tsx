@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
 import {
@@ -16,7 +16,6 @@ import Header from './Header';
 import Footer from './Footer';
 import {useStore} from '../../state/search';
 import {CardContent} from './cardsContent';
-import {useStore as useSearchStore} from '../../state/search';
 
 const options = {
   year: 'numeric',
@@ -26,25 +25,17 @@ const options = {
 export default function Search({route, navigation}: Props) {
   const {params} = route.params;
   const theme = useTheme();
-  const setSelectedMethod = useStore(state => state.setSelectedMethod);
-  const selectedMethod = useStore(state => state.selectedMethod);
-  const setSearchParam = useStore(state => state.setSearchParam);
-  const serchParam = useStore(state => state.serchParam);
+  const [selectedMethod, setSelectedMethod] = useState(params.methods[0]);
+  const [serchParam, setSearchParam] = useState('');
   const data = useStore(state => state.data);
   const fetch = useStore(state => state.fetch);
   const loader = useStore(state => state.loader);
-  // const errorMessage = useState(state => state.errorMessage);
-
-  useEffect(() => {
-    setSelectedMethod(params.methods[0]);
-  }, []);
+  const errorMessage = useStore(state => state.errorMessage);
 
   const url =
     params.api + selectedMethod + params.additional + '&q=' + serchParam;
   useEffect(() => {
-    if (selectedMethod) {
-      fetch(url);
-    }
+    fetch(url);
   }, [url]);
 
   const getHeaderText = item => {
@@ -62,15 +53,6 @@ export default function Search({route, navigation}: Props) {
       tag: new Date(item.created).toLocaleString('en-GB', options),
     };
   };
-  navigation.setOptions({title: params.title});
-  const clean = useSearchStore(state => state.clean);
-
-  useEffect(() => {
-    return () => {
-      clean();
-      console.log('clean');
-    };
-  }, []);
 
   return (
     <ScrollView>
@@ -107,17 +89,25 @@ export default function Search({route, navigation}: Props) {
                 </View>
               ))}
             </View>
-            {data.map((item, index) => (
-              <Card
-                style={styles(theme).mb20}
-                key={index}
-                header={<Header data={getHeaderText(item)} />}
-                footer={
-                  <Footer onClick={() => navigation.navigate('Item', {item})} />
-                }>
-                {CardContent(params, item, selectedMethod, theme)}
-              </Card>
-            ))}
+            {errorMessage ? (
+              <Text>{errorMessage}</Text>
+            ) : (
+              <>
+                {data.map((item, index) => (
+                  <Card
+                    style={styles(theme).mb20}
+                    key={index}
+                    header={<Header data={getHeaderText(item)} />}
+                    footer={
+                      <Footer
+                        onClick={() => navigation.navigate('Item', {item})}
+                      />
+                    }>
+                    {CardContent(params, item, selectedMethod, theme)}
+                  </Card>
+                ))}
+              </>
+            )}
           </>
         )}
       </Layout>
@@ -137,10 +127,7 @@ export const styles = (theme: ThemeType) =>
     center: {
       alignItems: 'center',
       justifyContent: 'center',
-      display: 'flex',
       flex: 1,
-      height: '100%',
-      width: '100%',
     },
     p20: {padding: 20},
     p5: {padding: 5},
