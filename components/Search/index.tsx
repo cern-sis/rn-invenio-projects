@@ -21,7 +21,7 @@ const options = {
   day: 'numeric',
 };
 export default function Search({route, navigation}: Props) {
-  const {params} = route.params;
+  const {params = {methods: [], api: '', additional: ''}} = route.params;
   const [items, setItems] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const theme = useTheme();
@@ -65,7 +65,7 @@ export default function Search({route, navigation}: Props) {
   };
 
   const getCardContent = item => {
-    const type = params.name;
+    const type = params?.name;
 
     const choices = {
       cap: (
@@ -171,7 +171,7 @@ const styles = (theme: ThemeType) =>
     center: {alignItems: 'center'},
     p20: {padding: 20},
     p5: {padding: 5},
-    activeLabel: {backgroundColor: theme['color-primary-400']},
-    inactiveLabel: {backgroundColor: theme['color-info-200']},
+    activeLabel: {backgroundColor: theme['color-primary-600']},
+    inactiveLabel: {backgroundColor: theme['color-primary-200']},
     mt20: {marginTop: 20},
   });

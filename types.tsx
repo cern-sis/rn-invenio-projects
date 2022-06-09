@@ -10,7 +10,8 @@ export interface ProjectProps {
 }
 
 interface ScreenProps {
-  params: ProjectProps;
+  params?: ProjectProps;
+  item?: ProjectProps;
 }
 
 export type RootStackParamList = {
