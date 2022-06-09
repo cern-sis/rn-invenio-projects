@@ -17,7 +17,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   Search: ScreenProps;
   Item: ScreenProps;
-  Settings: ScreenProps;
+  Preferences: ScreenProps;
 };
 
 export type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;

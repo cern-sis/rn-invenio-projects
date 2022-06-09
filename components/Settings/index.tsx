@@ -7,7 +7,7 @@ import SettingsHome from './Settings';
 const Settings = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Settings" component={SettingsHome} />
+      <Stack.Screen name="Preferences" component={SettingsHome} />
     </Stack.Navigator>
   );
 };
