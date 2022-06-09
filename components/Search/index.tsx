@@ -55,40 +55,40 @@ export default function Search({route, navigation}: Props) {
   };
 
   return (
-    <ScrollView>
-      <Layout style={styles(theme).p20}>
-        <Input
-          placeholder="Search..."
-          status="primary"
-          value={serchParam}
-          onChangeText={setSearchParam}
-          style={styles(theme).mb20}
-        />
-        {loader ? (
-          <View style={styles(theme).center}>
-            <Spinner size="large" />
+    <Layout style={styles(theme).p20}>
+      <Input
+        placeholder="Search..."
+        status="primary"
+        value={serchParam}
+        onChangeText={setSearchParam}
+        style={styles(theme).mb20}
+      />
+      {loader ? (
+        <View style={styles(theme).center}>
+          <Spinner size="large" />
+        </View>
+      ) : (
+        <>
+          <View style={styles(theme).methods}>
+            {params.methods.map(method => (
+              <View style={styles(theme).mr10} key={method}>
+                <Text
+                  appearance="alternative"
+                  onPress={() => {
+                    params.methods.length > 1 && setSelectedMethod(method);
+                  }}
+                  style={[
+                    styles(theme).p5,
+                    selectedMethod === method
+                      ? styles(theme).activeLabel
+                      : styles(theme).inactiveLabel,
+                  ]}>
+                  {method}
+                </Text>
+              </View>
+            ))}
           </View>
-        ) : (
-          <>
-            <View style={styles(theme).methods}>
-              {params.methods.map(method => (
-                <View style={styles(theme).mr10} key={method}>
-                  <Text
-                    appearance="alternative"
-                    onPress={() => {
-                      params.methods.length > 1 && setSelectedMethod(method);
-                    }}
-                    style={[
-                      styles(theme).p5,
-                      selectedMethod === method
-                        ? styles(theme).activeLabel
-                        : styles(theme).inactiveLabel,
-                    ]}>
-                    {method}
-                  </Text>
-                </View>
-              ))}
-            </View>
+          <ScrollView>
             {errorMessage ? (
               <Text>{errorMessage}</Text>
             ) : (
@@ -108,10 +108,10 @@ export default function Search({route, navigation}: Props) {
                 ))}
               </>
             )}
-          </>
-        )}
-      </Layout>
-    </ScrollView>
+          </ScrollView>
+        </>
+      )}
+    </Layout>
   );
 }
 
@@ -123,13 +123,13 @@ export const styles = (theme: ThemeType) =>
     mr10: {
       marginRight: 10,
     },
-    methods: {marginBottom: 50, flexDirection: 'row'},
+    methods: {marginBottom: 20, flexDirection: 'row'},
     center: {
       alignItems: 'center',
       justifyContent: 'center',
       flex: 1,
     },
-    p20: {padding: 20},
+    p20: {padding: 20, flex: 1},
     p5: {padding: 5},
     activeLabel: {backgroundColor: theme['color-primary-600']},
     inactiveLabel: {backgroundColor: theme['color-primary-200']},

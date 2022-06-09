@@ -14,7 +14,6 @@ export const useStore = create<SearchHookProps>(set => ({
 
   data: [],
   fetch: url => {
-    console.log(url);
     set(() => ({loader: true}));
     axios
       .get(url)
