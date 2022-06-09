@@ -1,4 +1,4 @@
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export interface ProjectProps {
   name: string;
@@ -21,3 +21,8 @@ export type RootStackParamList = {
 };
 
 export type Props = NativeStackScreenProps<RootStackParamList, 'Search'>;
+
+export interface ChangeTitleHookProps {
+  title: string;
+  changeTitle(title: string): void
+}
