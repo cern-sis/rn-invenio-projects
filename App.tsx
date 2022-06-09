@@ -17,16 +17,31 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {default as theme} from './theme/custom-theme.json';
 import Home from './components/Home';
 import Settings from './components/Settings';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import {useStore} from './state';
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const darkTheme = useStore(state => state.darkTheme);
+  const DarkTheme = {
+    dark: true,
+    colors: {
+      primary: 'rgb(39, 82, 211)',
+      background: 'rgb(242, 242, 245)',
+      card: 'rgb(35, 43, 67)',
+      text: '#fff',
+      border: 'rgb(199, 199, 204)',
+      notification: 'rgb(255, 69, 58)',
+    },
+  };
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
-        <NavigationContainer>
+      <ApplicationProvider
+        {...eva}
+        theme={darkTheme ? {...eva.dark, ...theme} : {...eva.light, ...theme}}>
+        <NavigationContainer theme={darkTheme ? DarkTheme : DefaultTheme}>
           <Tab.Navigator>
             <Tab.Screen
               name="Home"
