@@ -5,17 +5,9 @@ import {pathOr} from 'ramda';
 import {SearchHookProps} from '../types';
 
 export const useStore = create<SearchHookProps>(set => ({
-  serchParam: '',
-  setSearchParam: (newSerchParam: string) =>
-    set(() => ({serchParam: newSerchParam})),
-
-  selectedMethod: '',
-  setSelectedMethod: (newMethod: string) =>
-    set(() => ({selectedMethod: newMethod})),
-
   errorMessage: '',
-  setErrorMessage: (errorMessage: string) =>
-    set(() => ({errorMessage: errorMessage})),
+  setErrorMessage: (newErrorMessage: string) =>
+    set(() => ({errorMessage: newErrorMessage})),
 
   loader: true,
   setLoader: (loader: boolean) => set(() => ({loader: loader})),

@@ -4,7 +4,12 @@ import {Text} from '@ui-kitten/components';
 import {styles} from '.';
 import {pathOr} from 'ramda';
 
-export function CardContent(params: any, item: any, selectedMethod: string, theme: any) {
+export function CardContent(
+  params: any,
+  item: any,
+  selectedMethod: string,
+  theme: any,
+) {
   const type = params.name;
 
   const getCapCard = item => (
@@ -45,19 +50,20 @@ export function CardContent(params: any, item: any, selectedMethod: string, them
   );
 
   const getScoap3Card = item => {
-    console.log(pathOr('No value!', ['metadata', 'dois'], item));
+    const dois = pathOr([], ['metadata', 'dois'], item);
+    const abstracts = pathOr([], ['metadata', 'abstracts'], item);
     return (
       <View>
         <View>
           <Text>DOI</Text>
           <Text appearance="hint">
-            {pathOr('No value!', ['metadata', 'dois[0]', 'value'], item)}
+            {pathOr('No Value!', ['value'], dois[0])}
           </Text>
         </View>
         <View style={styles(theme).mt20}>
           <Text>Publisher</Text>
           <Text appearance="hint">
-            {pathOr('No value!', ['metadata', 'abstracts[0]', 'source'], item)}
+            {pathOr('No Value!', ['source'], abstracts[0])}
           </Text>
         </View>
       </View>
@@ -72,6 +78,6 @@ export function CardContent(params: any, item: any, selectedMethod: string, them
     case 'scoap3':
       return getScoap3Card(item);
     default:
-      break;
+      return <></>;
   }
 }
