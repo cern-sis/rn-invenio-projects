@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import axios from 'axios';
-import {Props} from '../../types';
-import {debounce} from 'lodash';
+
 import {
   Input,
   Layout,
@@ -13,40 +11,41 @@ import {
   ThemeType,
 } from '@ui-kitten/components';
 
+import {Props} from '../../types';
 import Header from './Header';
 import Footer from './Footer';
+import {useStore} from '../../state/search';
+import {CardContent} from './cardsContent';
+import {useStore as useSearchStore} from '../../state/search';
+
 const options = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 };
 export default function Search({route, navigation}: Props) {
-  const {params = {methods: [], api: '', additional: ''}} = route.params;
-  const [items, setItems] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
+  const {params} = route.params;
   const theme = useTheme();
-  const [selectedMethod, setSelectedMethod] = useState(params.methods[0]);
+  const setSelectedMethod = useStore(state => state.setSelectedMethod);
+  const selectedMethod = useStore(state => state.selectedMethod);
+  const setSearchParam = useStore(state => state.setSearchParam);
+  const serchParam = useStore(state => state.serchParam);
+  const data = useStore(state => state.data);
+  const fetch = useStore(state => state.fetch);
+  const loader = useStore(state => state.loader);
+  // const errorMessage = useState(state => state.errorMessage);
 
-  const getInitialData = debounce(async (value = '') => {
-    const url = params.api + selectedMethod + params.additional + '&q=' + value;
-    try {
-      const data = await axios({
-        method: 'GET',
-        url,
-      });
-      setItems(data.data.hits.hits);
-    } catch (e) {}
-  }, 500);
-
-  // update data when user comes to the screen
   useEffect(() => {
-    getInitialData();
+    setSelectedMethod(params.methods[0]);
   }, []);
 
-  // update data when user searches for a term
+  const url =
+    params.api + selectedMethod + params.additional + '&q=' + serchParam;
   useEffect(() => {
-    getInitialData(searchValue);
-  }, [searchValue, selectedMethod]);
+    if (selectedMethod) {
+      fetch(url);
+    }
+  }, [url]);
 
   const getHeaderText = item => {
     const type = params.name;
@@ -63,51 +62,15 @@ export default function Search({route, navigation}: Props) {
       tag: new Date(item.created).toLocaleString('en-GB', options),
     };
   };
+  navigation.setOptions({title: params.title});
+  const clean = useSearchStore(state => state.clean);
 
-  const getCardContent = item => {
-    const type = params?.name;
-
-    const choices = {
-      cap: (
-        <View>
-          <View>
-            <Text category="label">Fullname</Text>
-            <Text appearance="hint">{item.schema?.fullname}</Text>
-          </View>
-          <View style={styles(theme).mt20}>
-            <Text category="label"> Experiment</Text>
-            <Text appearance="hint">{item.experiment}</Text>
-          </View>
-        </View>
-      ),
-      inspire: (
-        <View>
-          {selectedMethod === 'literature' ? (
-            <View>
-              <Text category="label">Title</Text>
-              <Text appearance="hint">
-                {item.metadata.titles && item.metadata.titles[0].title}
-              </Text>
-            </View>
-          ) : (
-            <View>
-              <Text category="label">Institute</Text>
-              <Text appearance="hint">
-                {item.metadata.positions &&
-                  item.metadata.positions[0].institution}
-              </Text>
-            </View>
-          )}
-          <View style={styles(theme).mt20}>
-            <Text category="label">ID</Text>
-            <Text appearance="hint">{item.id}</Text>
-          </View>
-        </View>
-      ),
+  useEffect(() => {
+    return () => {
+      clean();
+      console.log('clean');
     };
-
-    return choices[type];
-  };
+  }, []);
 
   return (
     <ScrollView>
@@ -115,51 +78,54 @@ export default function Search({route, navigation}: Props) {
         <Input
           placeholder="Search..."
           status="primary"
-          value={searchValue}
-          onChangeText={setSearchValue}
+          value={serchParam}
+          onChangeText={setSearchParam}
           style={styles(theme).mb20}
         />
-        {items.length === 0 && (
+        {loader ? (
           <View style={styles(theme).center}>
             <Spinner size="large" />
           </View>
-        )}
-        <View style={styles(theme).methods}>
-          {params.methods.map(method => (
-            <View style={styles(theme).mr10} key={method}>
-              <Text
-                appearance="alternative"
-                onPress={() =>
-                  params.methods.length > 1 && setSelectedMethod(method)
-                }
-                style={[
-                  styles(theme).p5,
-                  selectedMethod === method
-                    ? styles(theme).activeLabel
-                    : styles(theme).inactiveLabel,
-                ]}>
-                {method}
-              </Text>
+        ) : (
+          <>
+            <View style={styles(theme).methods}>
+              {params.methods.map(method => (
+                <View style={styles(theme).mr10} key={method}>
+                  <Text
+                    appearance="alternative"
+                    onPress={() => {
+                      params.methods.length > 1 && setSelectedMethod(method);
+                    }}
+                    style={[
+                      styles(theme).p5,
+                      selectedMethod === method
+                        ? styles(theme).activeLabel
+                        : styles(theme).inactiveLabel,
+                    ]}>
+                    {method}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
-        {items.map((item, index) => (
-          <Card
-            style={styles(theme).mb20}
-            key={index}
-            header={<Header data={getHeaderText(item)} />}
-            footer={
-              <Footer onClick={() => navigation.navigate('Item', {item})} />
-            }>
-            {getCardContent(item)}
-          </Card>
-        ))}
+            {data.map((item, index) => (
+              <Card
+                style={styles(theme).mb20}
+                key={index}
+                header={<Header data={getHeaderText(item)} />}
+                footer={
+                  <Footer onClick={() => navigation.navigate('Item', {item})} />
+                }>
+                {CardContent(params, item, selectedMethod, theme)}
+              </Card>
+            ))}
+          </>
+        )}
       </Layout>
     </ScrollView>
   );
 }
 
-const styles = (theme: ThemeType) =>
+export const styles = (theme: ThemeType) =>
   StyleSheet.create({
     mb20: {
       marginBottom: 20,
@@ -168,7 +134,14 @@ const styles = (theme: ThemeType) =>
       marginRight: 10,
     },
     methods: {marginBottom: 50, flexDirection: 'row'},
-    center: {alignItems: 'center'},
+    center: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      display: 'flex',
+      flex: 1,
+      height: '100%',
+      width: '100%',
+    },
     p20: {padding: 20},
     p5: {padding: 5},
     activeLabel: {backgroundColor: theme['color-primary-600']},
