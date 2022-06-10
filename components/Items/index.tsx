@@ -25,7 +25,8 @@ const Item = ({route}) => {
             style={styles(theme).tag1}>
             {item.experiment ||
               item.metadata?.first_author?.full_name ||
-              item.metadata?.name?.value}
+              item.metadata?.name?.value ||
+              item.metadata?.publication_info[0].journal_title}
           </Text>
           <Text
             appearance="alternative"
